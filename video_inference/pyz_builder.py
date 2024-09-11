@@ -25,9 +25,9 @@ if __name__ == "__main__":
         "-t", "--targets",
         type=str,
         nargs="+",
-        metavar="DEMO",
-        default=["demo.py"],
-        choices=["demo.py", *examples],
+        metavar="EXAMPLE",
+        default=["infer.py"],
+        choices=examples,
         help="Which demo(s) to build ([default] %(choices)s)"
     )
     parser.add_argument(
@@ -42,14 +42,12 @@ if __name__ == "__main__":
     if not (output_dir := Path(args.output_dir)).exists():
         output_dir.mkdir(parents=True)
 
-    targets: list[str] = ["demo.py", *examples] if args.all else args.targets
+    targets: list[str] = examples if args.all else args.targets
     for target in targets:
         with TemporaryDirectory() as td:
             td = Path(td) / "demo-python"
             for f in Path(".").rglob("*"):
                 if str(f.resolve()) == __file__:
-                    continue
-                if f.resolve() == cwd / "demo.py":
                     continue
                 if cwd / f.parent == cwd / "examples":
                     continue
@@ -57,7 +55,7 @@ if __name__ == "__main__":
                     dst = td / f.parent
                     dst.mkdir(parents=True, exist_ok=True)
                     copy2(f, dst)
-            target_src: Path = cwd / target if target == "demo.py" else cwd / "examples" / target
+            target_src: Path = cwd / "examples" / target
             copy2(target_src, td / "__main__.py")
             zipapp.create_archive(td, f"{output_dir}/{Path(target).stem}.pyz")
             print(f"Built {output_dir.resolve()}/{Path(target).stem}.pyz")

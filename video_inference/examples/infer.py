@@ -149,6 +149,18 @@ if __name__ == "__main__":
         default=0.5,
         help="Confidence threshold for inferences (default: %(default)s)"
     )
+
+    # A file containing labels for use with inference results. The default is labels from the COCO dataset.
+    # Only used with suitable tasks like Object Detection and Instance Segmentation.
+    inf_group.add_argument(
+        "-l",
+        "--labels",
+        type=str,
+        metavar="JSON",
+        default="/usr/share/synap/models/object_detection/coco/info.json",
+        help="JSON file containing labels to use with inference results"
+    )
+
     args = parser.parse_args()
 
     main(args)
