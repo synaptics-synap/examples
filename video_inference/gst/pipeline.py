@@ -127,6 +127,7 @@ class GstPipelineGenerator:
         self._inf_skip: int = gst_params["inf_skip"]
         self._inf_max: int = gst_params["inf_max"]
         self._inf_thresh: float = gst_params["inf_thresh"]
+        self._inf_labels: str = gst_params["inf_labels"]
         self._fullscreen: bool = gst_params["fullscreen"]
         self._pipeline: GstPipeline = GstPipeline()
 
@@ -158,7 +159,7 @@ class GstPipelineGenerator:
             [
                 "synapoverlay",
                 "name=overlay",
-                "label=/usr/share/synap/models/object_detection/coco/info.json",
+                f"label={self._inf_labels}",
             ],
         ]
         self._display_elems: list[str, list[str]] = [

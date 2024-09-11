@@ -56,6 +56,11 @@ def main(args: argparse.Namespace) -> None:
             0.5,
             0.0, 1.0,
         )
+        gst_params["inf_labels"] = get_file_prop(
+            "Class labels file",
+            args.labels if args.model else None,
+            "/usr/share/synap/models/object_detection/coco/info.json",
+        )
         gst_params["fullscreen"] = (
             args.fullscreen
             if args.fullscreen is not None
@@ -150,7 +155,7 @@ if __name__ == "__main__":
         help="Confidence threshold for inferences (default: %(default)s)"
     )
 
-    # A file containing labels for use with inference results. The default is labels from the COCO dataset.
+    # A file containing class labels for use with inference results. The default is labels from the COCO dataset.
     # Only used with suitable tasks like Object Detection and Instance Segmentation.
     inf_group.add_argument(
         "-l",
@@ -158,7 +163,7 @@ if __name__ == "__main__":
         type=str,
         metavar="JSON",
         default="/usr/share/synap/models/object_detection/coco/info.json",
-        help="JSON file containing labels to use with inference results"
+        help="JSON file containing class labels to use with inference results",
     )
 
     args = parser.parse_args()

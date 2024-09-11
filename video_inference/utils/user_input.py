@@ -11,6 +11,7 @@ __all__ = [
     "get_dims",
     "get_bool_prop",
     "get_float_prop",
+    "get_file_prop",
     "get_int_prop",
     "get_inp_type",
     "get_inp_src_info",
@@ -51,6 +52,24 @@ def get_bool_prop(prompt: str) -> bool:
             return val == "y"
         except (TypeError, ValueError):
             print(f"\nInvalid input\n")
+
+
+def get_file_prop(prompt: str, prop_val: Optional[str], default: str) -> str:
+    """
+    Gets the path to a valid file.
+
+    Prompts user for file path if `prop_val` is None.
+    """
+    while True:
+        try:
+            if prop_val is None:
+                prop_val = input(f"{prompt} (default: {default}): ") or default
+            with open(prop_val, "r"):
+                pass
+            return prop_val
+        except FileNotFoundError:
+            print("\nInvalid input: file doesn't exist\n")
+            prop_val = None
 
 
 def get_float_prop(prompt: str, prop_val: Optional[float], default: float, prop_min: float, prop_max: float) -> float:

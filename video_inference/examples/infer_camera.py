@@ -38,6 +38,10 @@ MAX_RESULTS = 5
 # Confidence threshold, only detections with scores above this will be considered valid
 CONF_THRESHOLD = 0.5
 
+# A file containing class labels for use with inference results. The default is labels from the COCO dataset.
+# Only used with suitable tasks like Object Detection and Instance Segmentation.
+LABELS_FILE = "/usr/share/synap/models/object_detection/coco/info.json"
+
 # Whether to launch the demo in fullscreen.
 FULLSCREEN = False
 
@@ -67,6 +71,7 @@ def main():
             "inf_skip": args.inference_skip,
             "inf_max": args.num_inferences,
             "inf_thresh": args.confidence_threshold,
+            "inf_labels": args.labels,
             "fullscreen": args.fullscreen,
         }
     except KeyboardInterrupt:
@@ -123,6 +128,14 @@ if __name__ == "__main__":
         metavar="SCORE",
         default=CONF_THRESHOLD,
         help="Confidence threshold for inferences (default: %(default)s)"
+    )
+    parser.add_argument(
+        "-l",
+        "--labels",
+        type=str,
+        metavar="JSON",
+        default=LABELS_FILE,
+        help="JSON file containing class labels to use with inference results",
     )
     parser.add_argument(
         "--fullscreen",
