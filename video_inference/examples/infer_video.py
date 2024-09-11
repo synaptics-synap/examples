@@ -46,7 +46,7 @@ FULLSCREEN = False
 
 def main():
     try:
-        inp_src_info = get_inp_src_info(None, None, args.input, args.input_codec)
+        inp_src_info = get_inp_src_info(None, None, args.input, args.input_codec, inp_type=InputType.FILE)
         if not inp_src_info:
             sys.exit(1)
         model = get_inf_model(args.model)

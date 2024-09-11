@@ -105,6 +105,7 @@ def get_inp_src_info(
     inp_h: Optional[int],
     inp_src: Optional[str],
     inp_codec: Optional[str],
+    inp_type: Optional[InputType] = None,
 ) -> Optional[tuple[int, str, str, tuple[str, str]]]:
     """
     Gets codec details from a provided input source.
@@ -112,11 +113,12 @@ def get_inp_src_info(
     Prompts user for missing information and also validates the input source.
     """
     inp_src: str = inp_src or input("Input source: ")
-    try:
-        inp_type: InputType = get_inp_type(inp_src)
-    except FileNotFoundError:
-        print(f"\nERROR: Invalid input source \"{inp_src}\"\n")
-        return None
+    if not inp_type:
+        try:
+            inp_type: InputType = get_inp_type(inp_src)
+        except FileNotFoundError:
+            print(f"\nERROR: Invalid input source \"{inp_src}\"\n")
+            return None
     gst_val: GstInputValidator = GstInputValidator(inp_type)
     codec_elems: Optional[tuple[str, str]] = None
     try:

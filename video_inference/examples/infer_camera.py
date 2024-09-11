@@ -49,7 +49,7 @@ FULLSCREEN = False
 def main():
     try:
         inp_w, inp_h = [int(d) for d in args.input_dims.split("x")]
-        inp_src_info = get_inp_src_info(inp_w, inp_h, args.input, None)
+        inp_src_info = get_inp_src_info(inp_w, inp_h, args.input, None, inp_type=InputType.CAMERA)
         if not inp_src_info:
             sys.exit(1)
         model = get_inf_model(args.model)
