@@ -26,9 +26,8 @@ if __name__ == "__main__":
         type=str,
         nargs="+",
         metavar="EXAMPLE",
-        default=["infer.py"],
         choices=examples,
-        help="Which demo(s) to build ([default] %(choices)s)"
+        help="Which demo(s) to build (choices: %(choices)s)"
     )
     parser.add_argument(
         "-o", "--output_dir",
