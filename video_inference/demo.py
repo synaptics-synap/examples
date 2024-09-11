@@ -76,6 +76,8 @@ if __name__ == "__main__":
         description=__doc__,
         epilog="NOTE: The script will interactively ask for necessary info not provided via command line.",
     )
+
+    # Input video source: can be a camera device, video file, or RTSP stream URL
     parser.add_argument(
         "-i",
         "--input",
@@ -83,6 +85,8 @@ if __name__ == "__main__":
         metavar="SRC",
         help="Input source (file / camera / RTSP)",
     )
+
+    # Input source width and height. Necessary for camera but can be skipped for video and RTSP.
     parser.add_argument(
         "-d",
         "--input_dims",
@@ -90,6 +94,8 @@ if __name__ == "__main__":
         metavar="WIDTHxHEIGHT",
         help="Input size (widthxheight)",
     )
+
+    # The codec used to compress the input video. Required only for video and RTSP.
     parser.add_argument(
         "-c",
         "--input_codec",
@@ -97,6 +103,8 @@ if __name__ == "__main__":
         default="h264",
         help="Input codec for file/RTSP (default: %(default)s)",
     )
+
+    # Whether to launch the demo in fullscreen
     parser.add_argument(
         "--fullscreen",
         action="store_true",
@@ -105,9 +113,14 @@ if __name__ == "__main__":
     )
 
     inf_group = parser.add_argument_group("Inference parameters")
+
+    # The path to the inference model to use. Must be a vaild SyNAP model with a ".synap" file extension.
     inf_group.add_argument(
         "-m", "--model", type=str, metavar="FILE", help="SyNAP model file location"
     )
+
+    # How many frames to skip between sucessive inferences.
+    # Increasing this number may result in better performance but can look worse visually.
     inf_group.add_argument(
         "-s",
         "--inference_skip",
@@ -116,6 +129,8 @@ if __name__ == "__main__":
         default=1,
         help="How many frames to skip between each inference (default: %(default)s)",
     )
+
+    # Maximum number of inference results to display per frame
     inf_group.add_argument(
         "-n",
         "--num_inferences",
@@ -124,6 +139,8 @@ if __name__ == "__main__":
         default=5,
         help="Maximum number of detections returned per frame (default: %(default)s)"
     )
+
+    # Confidence threshold: only detections with scores above this will be considered valid
     inf_group.add_argument(
         "-t",
         "--confidence_threshold",
