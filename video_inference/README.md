@@ -43,6 +43,10 @@ To begin, clone the examples repository to your development machine or SL1680 bo
 
 The source code for the input specific demos is in [examples](examples). These have some pre-defined parameters that can be modified in the source code. Additionally the [`gst`](gst) and [`utils`](utils) modules contain classes and functions that can be used to build custom demos.
 
+### SyNAP GStreamer Plugins
+The [`gst`](gst) module creates a GStreamer pipeline that uses the SyNAP GStreamer plugins for streaming and real-time video inference. Many of the input arguments such as `--model` are directly passed to these plugins by `gst`. Documentation on the GStreamer plugins can be found here: https://synaptics-astra.github.io/doc/v/1.1.0/linux/index.html#gstreamer-synap-plugin
+
+### Building a Demo
 To build demos into a self-contained executable zip archive (`.pyz`), place the demo source code in [examples](examples). Then run:
 ```
 python3 pyz_builder.py --target your_demo.py
