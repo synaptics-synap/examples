@@ -5,7 +5,7 @@ from scipy.io.wavfile import write
 
 from silero_vad import VADIterator, load_silero_vad
 from speech_to_text.moonshine import SpeechToText 
-from speech_to_text.utils.audio_manager import AudioManager
+from utils.audio_manager import AudioManager
 
 SAMPLING_RATE = 16000
 CHUNK_SIZE = 512    
@@ -72,7 +72,7 @@ class SpeechToTextPipeline:
 
     def run(self):
         self.audio_manager.start_record(chunk_size=CHUNK_SIZE)
-        print("Press Ctrl+C to quit live captions.\n")
+        print("Press Ctrl+C to quit speech-to-text.\n")
         start_time = time.time()
         call_end_recording = False
 

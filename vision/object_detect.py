@@ -1,6 +1,6 @@
 
 from synapRT.pipelines import pipeline
-from vision.utils.websockets import WebSockets
+from utils.websockets import WebSockets
 import json
 import sys
 

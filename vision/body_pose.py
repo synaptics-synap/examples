@@ -2,7 +2,7 @@ import json
 import sys
 import time
 import threading
-from vision.utils.websockets import WebSockets
+from utils.websockets import WebSockets
 from synapRT.pipelines import pipeline
 
 def main():

@@ -8,6 +8,11 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Object detection
+```bash
+python3 -m vision.object_detection 'cam'
+```
+
 ## Speech-to-text
 
 Moonshine is an edge AI targetted speech-to-text model with Whisper-like Word Error Rate (WER). To transcribe the `jfk.wav`
@@ -28,7 +33,7 @@ python3 -m speech_to_text.pipeline
 python3 -m text_to_speech.piper "synaptics astra example"
 ```
 
-## Install sqlite python library for llama-cpp-python support
+## Install llama-cpp-python
 
 ```bash
 Also add sqlite3 binary:

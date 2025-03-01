@@ -14,7 +14,8 @@ class Embeddings:
             n_threads=4,
             n_ctx=128,
             n_batch=512,
-            embedding=True
+            embedding=True,
+            verbose=False  # Set verbose to False to keep llm quiet
         )
 
     def generate(self, text):
