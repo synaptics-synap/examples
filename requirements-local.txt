@@ -10,4 +10,3 @@ huggingface-hub
 piper-tts
 websocket-server
 synap-python
-synap-rt
