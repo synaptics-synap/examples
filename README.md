@@ -13,7 +13,7 @@ The examples in this repository are designed to work with Astra SL series proces
 
 
 ## 🔧 Installation
----
+ 
 
 ### Clone the Repository
 
@@ -47,13 +47,20 @@ pip install https://github.com/synaptics-synap/synap-rt/releases/download/v0.0.1
 
 ## 🎯 Running AI Examples
 
-### 🖼️ Object Detection
-This script runs a YOLOv8-small object detection model using a connected camera:
+### 🖼️ Vision
+To run a YOLOv8-small  image classification model on a Image:
 ```bash
-python3 -m vision.object_detect 'cam'
+ python3 -m vision.image_class out.jpg
 ```
 
----
+To run a YOLOv8-small body pose model using a connected camera and you can Infer results using :
+```bash
+python3 -m vision.body_pose 'cam'
+```
+![bodypose](/samples/body-pose.gif)
+
+
+ 
 
 ### 🗣️ Speech-to-Text
 
@@ -69,7 +76,7 @@ To enable real-time speech transcription using a **USB microphone** (such as one
 python3 -m speech_to_text.pipeline
 ```
 
----
+ 
 
 ### 🔊 Text-to-Speech
 Convert a given text string into synthetic speech using **Piper**:
@@ -77,7 +84,6 @@ Convert a given text string into synthetic speech using **Piper**:
 python3 -m text_to_speech.piper "synaptics astra example"
 ```
 
----
 ### 🚀 Large Language Models (LLMs)
 
 
@@ -98,7 +104,7 @@ pip install llama-cpp-python   --extra-index-url https://abetlen.github.io/llama
 Run large language models such as **Qwen** and **DeepSeek**:
 ```bash
 python3 -m llm.qwen
-python3 -m llm.deepseek
+#python3 -m llm.deepseek
 ```
 ---
 
@@ -110,7 +116,7 @@ python3 -m embeddings.minilm "synaptics astra example!"
 
 ---
 
-### 🤖 Text Assistant
+### 🤖 AI - Text Assistant
 Launch an AI-powered text assistant with Tool calling functionality:
 ```bash
 python3 -m assistant.toolcall
