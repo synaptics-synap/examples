@@ -5,7 +5,7 @@
     },
     {
         "token": "{vision}",
-        "command": "python3 assistant/tools/vision.py"
+        "command": "python3 -m assistant.tools.vision"
     },
     {
         "token": "{light_on}",
