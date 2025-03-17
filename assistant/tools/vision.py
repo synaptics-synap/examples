@@ -2,11 +2,12 @@ import subprocess
 import json
 import os
 import time
-import sys
 import warnings
 from synap import Network
 from synap.preprocessor import Preprocessor
 from synap.postprocessor import Classifier
+
+from utils.photo import capture
 
 MODEL_PATH = "/usr/share/synap/models/image_classification/imagenet/model/mobilenet_v2_1.0_224_quant/model.synap"
 LABELS_FILE = "/usr/share/synap/models/image_classification/imagenet/info.json"
@@ -49,42 +50,6 @@ def get_camera_devices(cam_subsys: str = "video4linux") -> list[str]:
                     warnings.warn(f"Warning: Unexpected contents in {index_path}: {contents}")
 
     return camera_paths
-
-def capture_photo(device=None, filename="/dev/shm/out.jpg"):
-    try:
-        device = device or get_camera_devices()[0]
-    except IndexError:
-        warnings.warn("Valid camera device not found, defaulting to /dev/video7")
-        device = "/dev/video7"
-    # Set the video format to MJPG at 640x480.
-    fmt_cmd = [
-        "v4l2-ctl",
-        f"--device={device}",
-        "--set-fmt-video=width=640,height=480,pixelformat=MJPG"
-    ]
-    try:
-        subprocess.run(fmt_cmd, capture_output=True, text=True, check=True)
-    except subprocess.CalledProcessError as e:
-        print("Error setting format:")
-        print(e.stderr)
-        return False
-
-    # Capture one frame to a file.
-    capture_cmd = [
-        "v4l2-ctl",
-        f"--device={device}",
-        "--stream-mmap",
-        "--stream-count=1",
-        f"--stream-to={filename}"
-    ]
-    try:
-        subprocess.run(capture_cmd, capture_output=True, text=True, check=True)
-        # print(f"Image saved as {filename}")
-        return True
-    except subprocess.CalledProcessError as e:
-        print("Error capturing image:")
-        print(e.stderr)
-        return False
 
 class ImageClassifier:
     def __init__(self, model_path=MODEL_PATH, labels_file=LABELS_FILE, top_count=5, debug=False):
@@ -131,8 +96,8 @@ class ImageClassifier:
         return None
 
 def main():
-    photo_file = "out.jpg"
-    if not capture_photo(filename=photo_file):
+    photo_file = "/dev/shm/out.jpg"
+    if not capture(filename=photo_file):
         print("Photo capture failed.")
         return
 
