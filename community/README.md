@@ -22,7 +22,7 @@ Submission Form : Fill out Project details and GitHub URL [here](https://forms.o
 1. **Pick a Challenge:** Choose one of the two exciting open-ended tasks below.
 2. **Build & Innovate:** Use **Astra Machina Dev Board** to develop your project.  
 3. **Submit on GitHub:** Fork our [Examples repo](https://github.com/synaptics-synap/examples), create your project and submit your GitHub Repo link in [Submission Form](https://forms.office.com/r/CgeycJ4HD4).  
-4. **Deadline:** April 6, 2025
+4. **Deadline:** May 30, 2025
 5. **Result:** Top project in each task gets featured in our Examples repo and AI Developer Blogs sections. 
 
 <br>
@@ -33,11 +33,11 @@ Think beyond basic vision tasks and create real-world applications using [YOLO v
 
 ### Build something creative like 
 
-- **Object Count Statistics**-  Track number of people/items)  
+- **Object Count Statistics**-  Track number of people/items 
 
-- **Smart Home Security** - Detect unknown visitors at the door)
+- **Smart Home Security** - Detect unknown visitors at the door
 
-- **Heatmap Detection** - Highlight high-activity zones)  
+- **Heatmap Detection** - Highlight high-activity zones 
 
 - **AI Sports Coach** – Analyze player movement for performance tracking.  
 
@@ -83,7 +83,7 @@ Build on our existing [AI Voice Assistant](https://github.com/dpajak-synaptics/o
 
 3. Submit your Project details and GitHub Repo URL [here](https://forms.office.com/r/CgeycJ4HD4).  
 
-4. Submit by Deadline:  April 6, 2025
+4. Submit by Deadline:  May 30, 2025
 <br>
 
 ## 🏆 Winner  
@@ -101,8 +101,11 @@ Projects will be evaluated based on:
 ## 📚 Additional Resources:
 
 🔹[Astra FAQ](https://synacsm.atlassian.net/servicedesk/customer/portal/543/topic/7f84fdc4-c401-461f-afed-238db48690f3)
+
 🔹[Fine-tune YOLO 11](https://developer.synaptics.com/docs/ai/tutorials/vision/custom-yolo)
-🔹[Optmize YOLO for Astra NPU](https://developer.synaptics.com/docs/ai/tutorials/vision/optimizing-ultralytics-yolo-edge-ai)
+
+🔹[Optimize YOLO for Astra NPU](https://developer.synaptics.com/docs/ai/tutorials/vision/optimizing-ultralytics-yolo-edge-ai)
+
 🔹[Optimize any Model for Astra NPU](https://developer.synaptics.com/docs/ai/tutorials/bring-your-own-model)
 <br>
 
