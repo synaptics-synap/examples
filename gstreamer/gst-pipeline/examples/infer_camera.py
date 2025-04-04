@@ -20,13 +20,15 @@ from utils.common import InputType, CAM_DEFAULT_WIDTH, CAM_DEFAULT_HEIGHT
 CAMERA = "AUTO"
 
 # Your camera's input width.
-INPUT_WIDTH = CAM_DEFAULT_WIDTH   # 640
+INPUT_WIDTH = CAM_DEFAULT_WIDTH  # 640
 
 # Your camera's input height.
-INPUT_HEIGHT = CAM_DEFAULT_HEIGHT # 480
+INPUT_HEIGHT = CAM_DEFAULT_HEIGHT  # 480
 
 # The path to the inference model to use. Must be a vaild SyNAP model with a ".synap" file extension.
-MODEL = "/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap"
+MODEL = (
+    "/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap"
+)
 
 # How many frames to skip between sucessive inferences.
 # Increasing this number may result in better performance but can look worse visually.
@@ -50,10 +52,13 @@ FULLSCREEN = False
 # RUNNER CODE: DO NOT MODIFY                                                     #
 # ============================================================================== #
 
+
 def main():
     try:
         inp_w, inp_h = [int(d) for d in args.input_dims.split("x")]
-        inp_src_info = get_inp_src_info(inp_w, inp_h, args.input, None, inp_type=InputType.CAMERA)
+        inp_src_info = get_inp_src_info(
+            inp_w, inp_h, args.input, None, inp_type=InputType.CAMERA
+        )
         if not inp_src_info:
             sys.exit(1)
         model = get_inf_model(args.model)
@@ -83,35 +88,40 @@ def main():
     gen.make_pipeline()
     gen.pipeline.run()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-i", "--input",
+        "-i",
+        "--input",
         type=str,
         default=CAMERA,
         metavar="DEVICE",
-        help="Connected camera device ID (default: %(default)s)"
+        help="Connected camera device ID (default: %(default)s)",
     )
     parser.add_argument(
-        "-d", "--input_dims",
+        "-d",
+        "--input_dims",
         type=validate_inp_dims,
         default=f"{INPUT_WIDTH}x{INPUT_HEIGHT}",
         metavar="WIDTHxHEIGHT",
-        help="Camera's input size (widthxheight) (default: %(default)s)"
+        help="Camera's input size (widthxheight) (default: %(default)s)",
     )
     parser.add_argument(
-        "-m", "--model",
+        "-m",
+        "--model",
         type=str,
         default=MODEL,
         metavar="FILE",
-        help="SyNAP model file location (default: %(default)s)"
+        help="SyNAP model file location (default: %(default)s)",
     )
     parser.add_argument(
-        "-s", "--inference_skip",
+        "-s",
+        "--inference_skip",
         type=int,
         default=INFERENCE_SKIP,
         metavar="FRAMES",
-        help="How many frames to skip between each inference (default: %(default)s)"
+        help="How many frames to skip between each inference (default: %(default)s)",
     )
     parser.add_argument(
         "-n",
@@ -119,7 +129,7 @@ if __name__ == "__main__":
         type=int,
         metavar="N_RESULTS",
         default=MAX_RESULTS,
-        help="Maximum number of detections returned per frame (default: %(default)s)"
+        help="Maximum number of detections returned per frame (default: %(default)s)",
     )
     parser.add_argument(
         "-t",
@@ -127,7 +137,7 @@ if __name__ == "__main__":
         type=float,
         metavar="SCORE",
         default=CONF_THRESHOLD,
-        help="Confidence threshold for inferences (default: %(default)s)"
+        help="Confidence threshold for inferences (default: %(default)s)",
     )
     parser.add_argument(
         "-l",

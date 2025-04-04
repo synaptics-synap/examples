@@ -7,20 +7,29 @@ import soundfile as sf
 from utils.models import download
 from tokenizers import Tokenizer
 
+
 class SpeechToText:
     def __init__(self, model="base", onnx_repo="UsefulSensors/moonshine", rate=16000):
         self.config_repo = f"UsefulSensors/moonshine-{model}"
         self.rate = rate
         self.config = self._load_config()
         self.tokenizer = self._load_tokenizer()
-        encoder_path = download(repo_id=onnx_repo, filename=f"onnx/merged/{model}/quantized/encoder_model.onnx")
-        decoder_path = download(repo_id=onnx_repo, filename=f"onnx/merged/{model}/quantized/decoder_model_merged.onnx")
+        encoder_path = download(
+            repo_id=onnx_repo,
+            filename=f"onnx/merged/{model}/quantized/encoder_model.onnx",
+        )
+        decoder_path = download(
+            repo_id=onnx_repo,
+            filename=f"onnx/merged/{model}/quantized/decoder_model_merged.onnx",
+        )
         self.encoder_session = onnxruntime.InferenceSession(encoder_path)
         self.decoder_session = onnxruntime.InferenceSession(decoder_path)
         self.eos_token_id = self.config["eos_token_id"]
         self.decoder_start_token_id = self.config["decoder_start_token_id"]
         self.num_key_value_heads = self.config["decoder_num_key_value_heads"]
-        self.dim_kv = self.config["hidden_size"] // self.config["decoder_num_attention_heads"]
+        self.dim_kv = (
+            self.config["hidden_size"] // self.config["decoder_num_attention_heads"]
+        )
         self.decoder_layers = self.config["decoder_num_hidden_layers"]
         self.max_len = self.config["max_position_embeddings"]
         self.transcribe(np.zeros(rate, dtype=np.float32))
@@ -39,9 +48,13 @@ class SpeechToText:
             max_len = min((audio.shape[-1] // self.rate) * 6, self.max_len)
         enc_out = self.encoder_session.run(None, {"input_values": audio})[0]
         batch_size = enc_out.shape[0]
-        input_ids = np.array([[self.decoder_start_token_id]] * batch_size, dtype=np.int64)
+        input_ids = np.array(
+            [[self.decoder_start_token_id]] * batch_size, dtype=np.int64
+        )
         past_kv = {
-            f"past_key_values.{layer}.{mod}.{kv}": np.zeros([batch_size, self.num_key_value_heads, 0, self.dim_kv], dtype=np.float32)
+            f"past_key_values.{layer}.{mod}.{kv}": np.zeros(
+                [batch_size, self.num_key_value_heads, 0, self.dim_kv], dtype=np.float32
+            )
             for layer in range(self.decoder_layers)
             for mod in ("decoder", "encoder")
             for kv in ("key", "value")
@@ -49,7 +62,12 @@ class SpeechToText:
         gen_tokens = input_ids
         for i in range(max_len):
             use_cache_branch = i > 0
-            dec_inputs = {"input_ids": gen_tokens[:, -1:], "encoder_hidden_states": enc_out, "use_cache_branch": [use_cache_branch], **past_kv}
+            dec_inputs = {
+                "input_ids": gen_tokens[:, -1:],
+                "encoder_hidden_states": enc_out,
+                "use_cache_branch": [use_cache_branch],
+                **past_kv,
+            }
             out = self.decoder_session.run(None, dec_inputs)
             logits = out[0]
             present_kv = out[1:]
@@ -66,6 +84,7 @@ class SpeechToText:
         speech = speech.astype(np.float32)[np.newaxis, :]
         tokens = self._generate(speech)
         return self.tokenizer.decode_batch(tokens, skip_special_tokens=True)[0]
+
 
 def main():
     if len(sys.argv) < 2:
@@ -86,6 +105,7 @@ def main():
     print(f"transcribe time:  {int(transcribe_ms)}ms")
     print(f"speed: {speed_factor:.1f}x")
     print(f"result: {text}")
+
 
 if __name__ == "__main__":
     main()

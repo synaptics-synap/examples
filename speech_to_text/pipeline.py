@@ -4,17 +4,18 @@ import numpy as np
 from scipy.io.wavfile import write
 
 from silero_vad import VADIterator, load_silero_vad
-from speech_to_text.moonshine import SpeechToText 
+from speech_to_text.moonshine import SpeechToText
 from utils.audio_manager import AudioManager
 
 SAMPLING_RATE = 16000
-CHUNK_SIZE = 512    
+CHUNK_SIZE = 512
 LOOKBACK_CHUNKS = 7
 MAX_LINE_LENGTH = 80
 MAX_SPEECH_SECS = 15
 MIN_REFRESH_SECS = 0.5
 
-OUTPUT_FILE = os.path.join(os.path.dirname(__file__), 'input.wav')
+OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "input.wav")
+
 
 class SpeechToTextPipeline:
     def __init__(self, model, handler, echo=False):
@@ -59,17 +60,17 @@ class SpeechToTextPipeline:
 
         if text.strip():
             self.handler(text, inference_time)
-        
+
         max_val = np.max(np.abs(self.speech))
         if max_val != 0:
             scaled = np.int16(self.speech / max_val * 32767)
         else:
             scaled = np.int16(self.speech)
         write(OUTPUT_FILE, SAMPLING_RATE, scaled)
-        
+
         if self.echo:
             self.audio_manager.play(OUTPUT_FILE)
-        
+
         self.speech *= 0.0
 
     def run(self):
@@ -85,7 +86,7 @@ class SpeechToTextPipeline:
 
             self.speech = np.concatenate((self.speech, chunk))
             if not self.recording:
-                self.speech = self.speech[-self.lookback_size:]
+                self.speech = self.speech[-self.lookback_size :]
             speech_dict = self.vad_iterator(chunk)
 
             if speech_dict:
@@ -111,9 +112,9 @@ if __name__ == "__main__":
             print(f"\033[93mSTT: {text} \033[92m({inference_time*1000:.0f}ms)\033[0m")
 
     pipe = SpeechToTextPipeline(
-        model="base", # Set to "tiny" for faster but less accurate model
+        model="base",  # Set to "tiny" for faster but less accurate model
         handler=handle_results,
-        echo=False  # Set echo True to play audio after recording ends for debug purposes
+        echo=False,  # Set echo True to play audio after recording ends for debug purposes
     )
 
     pipe.run()

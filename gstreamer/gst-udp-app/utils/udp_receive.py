@@ -39,7 +39,7 @@ def main():
 
             if data:
                 try:
-                    json_data = json.loads(data.decode('utf-8'))
+                    json_data = json.loads(data.decode("utf-8"))
                     json_output = json.dumps(json_data, indent=2)
                 except json.JSONDecodeError:
                     json_output = "Failed to decode JSON data"
@@ -59,31 +59,35 @@ def main():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "-a", "--ip_address",
+        "-a",
+        "--ip_address",
         metavar="ADDR",
         type=str,
         default="0.0.0.0",
-        help="IP address to bind to (default: %(default)s (bind to all available interfaces))"
+        help="IP address to bind to (default: %(default)s (bind to all available interfaces))",
     )
     parser.add_argument(
-        "-p", "--port",
+        "-p",
+        "--port",
         type=int,
         default=5000,
-        help="Port to listen on (default: %(default)s)"
+        help="Port to listen on (default: %(default)s)",
     )
     parser.add_argument(
-        "-t", "--timeout",
+        "-t",
+        "--timeout",
         metavar="SECONDS",
         type=int,
         default=5,
-        help="Timeout for exiting when no data is received (default: %(default)s)"
+        help="Timeout for exiting when no data is received (default: %(default)s)",
     )
     parser.add_argument(
-        "-b", "--buffer_size",
+        "-b",
+        "--buffer_size",
         metavar="SIZE",
         type=int,
         default=1024,
-        help="UDP receiver data buffer size (in bytes) (default: %(default)s)"
+        help="UDP receiver data buffer size (in bytes) (default: %(default)s)",
     )
     args = parser.parse_args()
     main()

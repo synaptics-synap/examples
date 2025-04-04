@@ -14,12 +14,15 @@ LABELS_FILE = "/usr/share/synap/models/image_classification/imagenet/info.json"
 
 try:
     import gi
+
     gi.require_version("GUdev", "1.0")
     from gi.repository import GUdev
+
     GLIB_AVAILABLE = True
 except ImportError:
     GLIB_AVAILABLE = False
     warnings.warn("Unable to import gi, camera detection defaulting to /dev/video7")
+
 
 def get_camera_devices(cam_subsys: str = "video4linux") -> list[str]:
     if not GLIB_AVAILABLE:
@@ -47,12 +50,17 @@ def get_camera_devices(cam_subsys: str = "video4linux") -> list[str]:
                 except OSError as e:
                     warnings.warn(f"Warning: Error reading {index_path}: {e}")
                 except ValueError:
-                    warnings.warn(f"Warning: Unexpected contents in {index_path}: {contents}")
+                    warnings.warn(
+                        f"Warning: Unexpected contents in {index_path}: {contents}"
+                    )
 
     return camera_paths
 
+
 class ImageClassifier:
-    def __init__(self, model_path=MODEL_PATH, labels_file=LABELS_FILE, top_count=5, debug=False):
+    def __init__(
+        self, model_path=MODEL_PATH, labels_file=LABELS_FILE, top_count=5, debug=False
+    ):
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"'{model_path}' not found")
         self.labels = self.load_labels(labels_file)
@@ -69,7 +77,7 @@ class ImageClassifier:
         if self.debug:
             print("Net:", MODEL_PATH)
             print("Img:", image_path)
-        
+
         t0 = time.time()
         self.preprocessor.assign(self.network.inputs, image_path)
         t_pre = 1000 * (time.time() - t0)
@@ -88,12 +96,15 @@ class ImageClassifier:
             print(f"(pre: {t_pre:.3f} ms, inf: {t_inf:.3f} ms, post: {t_post:.3f} ms)")
             print("\nClass  Conf   Desc")
             for item in result.items:
-                print(f"{item.class_index:5d}{item.confidence:12.4f}  {self.labels[item.class_index]}")
-        
+                print(
+                    f"{item.class_index:5d}{item.confidence:12.4f}  {self.labels[item.class_index]}"
+                )
+
         if result.items:
             best = result.items[0]
             return self.labels[best.class_index]
         return None
+
 
 def main():
     photo_file = "/dev/shm/out.jpg"
@@ -102,8 +113,9 @@ def main():
         return
 
     clf = ImageClassifier()
-    best_label = clf.infer(photo_file).split(',')[0]
+    best_label = clf.infer(photo_file).split(",")[0]
     print(best_label)
+
 
 if __name__ == "__main__":
     main()

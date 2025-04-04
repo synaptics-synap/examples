@@ -211,7 +211,11 @@ class GstPipelineGenerator:
             ["rtspsrc", f'location="{rtsp_url}"', "latency=2000"],
             "rtpjitterbuffer",
             ["rtph264depay", "wait-for-keyframe=true"],
-            f"video/x-{inp_codec},width={self._inp_w},height={self._inp_h}" if (self._inp_w and self._inp_h) else f"video/x-{inp_codec}",
+            (
+                f"video/x-{inp_codec},width={self._inp_w},height={self._inp_h}"
+                if (self._inp_w and self._inp_h)
+                else f"video/x-{inp_codec}"
+            ),
             *codec_elems,
             *self._splitter_elems,
             *self._infer_elems,

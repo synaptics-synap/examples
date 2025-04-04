@@ -2,6 +2,7 @@ import subprocess
 import os
 import numpy as np
 
+
 class AudioManager:
     def __init__(self, record_device=None, play_device=None, sample_rate=16000):
         # For recording, we wait until a USB device is available
@@ -44,7 +45,7 @@ class AudioManager:
 
     def play(self, filename):
         """Play the audio file using the playback device.
-        
+
         If no playback device is available, warn and skip audio playback.
         """
         if not self._play_device:
@@ -57,11 +58,17 @@ class AudioManager:
         """Start the record process using the recording device."""
         if self.arecord_process:
             self.stop_record()
-        command = f"arecord -D {self._record_device} -f S16_LE -r {self._sample_rate} -c 2"
+        command = (
+            f"arecord -D {self._record_device} -f S16_LE -r {self._sample_rate} -c 2"
+        )
         print(f"Recording from: {self._record_device}")
         print(f"Command: {command}")
         self.arecord_process = subprocess.Popen(
-            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=chunk_size, shell=True
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            bufsize=chunk_size,
+            shell=True,
         )
 
     def stop_record(self):
@@ -88,7 +95,7 @@ class AudioManager:
             process = os.popen("aplay -l | grep USB\\ Audio && sleep 0.5")
             output = process.read()
             process.close()
-            if 'USB Audio' in output:
+            if "USB Audio" in output:
                 print("Playback device detected:")
                 print(output)
                 break
@@ -100,7 +107,7 @@ class AudioManager:
             process = os.popen("arecord -l | grep USB\\ Audio && sleep 0.5")
             output = process.read()
             process.close()
-            if 'USB Audio' in output:
+            if "USB Audio" in output:
                 print("Record device detected:")
                 print(output)
                 break
@@ -109,18 +116,20 @@ class AudioManager:
         """Find the USB playback device using `aplay -l`."""
         # self.wait_for_play_audio()
         try:
-            result = subprocess.run(["aplay", "-l"], capture_output=True, text=True, check=True)
+            result = subprocess.run(
+                ["aplay", "-l"], capture_output=True, text=True, check=True
+            )
             lines = result.stdout.splitlines()
             for line in lines:
                 if "USB Audio" in line:
                     parts = line.split()
                     if parts[0] == "card":
-                        card_index = parts[1].rstrip(':')
+                        card_index = parts[1].rstrip(":")
                     else:
                         continue
                     if "device" in parts:
                         device_pos = parts.index("device")
-                        device_index = parts[device_pos+1].rstrip(':')
+                        device_index = parts[device_pos + 1].rstrip(":")
                     else:
                         continue
                     device_name = f"plughw:{card_index},{device_index}"
@@ -136,18 +145,20 @@ class AudioManager:
         """Find the USB record device using `arecord -l`."""
         self.wait_for_record_audio()
         try:
-            result = subprocess.run(["arecord", "-l"], capture_output=True, text=True, check=True)
+            result = subprocess.run(
+                ["arecord", "-l"], capture_output=True, text=True, check=True
+            )
             lines = result.stdout.splitlines()
             for line in lines:
                 if "USB Audio" in line:
                     parts = line.split()
                     if parts[0] == "card":
-                        card_index = parts[1].rstrip(':')
+                        card_index = parts[1].rstrip(":")
                     else:
                         continue
                     if "device" in parts:
                         device_pos = parts.index("device")
-                        device_index = parts[device_pos+1].rstrip(':')
+                        device_index = parts[device_pos + 1].rstrip(":")
                     else:
                         continue
                     device_name = f"plughw:{card_index},{device_index}"

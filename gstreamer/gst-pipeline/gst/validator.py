@@ -52,7 +52,11 @@ class GstInputValidator:
                 ["rtspsrc", f'location="{inp_src}"', "latency=2000"],
                 "rtpjitterbuffer",
                 ["rtph264depay", "wait-for-keyframe=true"],
-                f"video/x-{inp_codec},width={inp_w},height={inp_h}" if (inp_w and inp_h) else f"video/x-{inp_codec}",
+                (
+                    f"video/x-{inp_codec},width={inp_w},height={inp_h}"
+                    if (inp_w and inp_h)
+                    else f"video/x-{inp_codec}"
+                ),
                 *codec_elems,
             )
         self._val_pipeline.add_elements(

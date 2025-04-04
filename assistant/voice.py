@@ -11,28 +11,30 @@ from embeddings.minilm import Embeddings
 
 DATA_PATH = os.path.join(os.path.dirname(__file__), "data", "qa_pairs.json")
 
+
 class Agent:
     def __init__(self, qa_file=DATA_PATH):
         self.embeddings = Embeddings()
         with open(qa_file, "r") as f:
             self.qa_pairs = json.load(f)
         self.question_embeddings = self.load_embeddings()
-    
+
     def load_embeddings(self):
         texts = [pair["question"] + " " + pair["answer"] for pair in self.qa_pairs]
         embeddings = []
         for text in tqdm(texts, desc="Computing embeddings"):
             embeddings.append(self.embeddings.generate(text))
         return np.array(embeddings)
-    
+
     def answer_query(self, query):
         query_emb = self.embeddings.generate(query)
         sims = cosine_similarity([query_emb], self.question_embeddings).flatten()
         best_idx = np.argmax(sims)
         return {
             "answer": self.qa_pairs[best_idx]["answer"],
-            "similarity": float(sims[best_idx])
+            "similarity": float(sims[best_idx]),
         }
+
 
 def run_command(command):
     try:
@@ -41,6 +43,7 @@ def run_command(command):
         out = f"[error: {e}]"
     return out
 
+
 def replace_tool_tokens(answer, tools):
     for tool in tools:
         token = tool["token"]
@@ -48,6 +51,7 @@ def replace_tool_tokens(answer, tools):
             output = run_command(tool["command"])
             answer = answer.replace(token, output)
     return answer
+
 
 def main():
     agent = Agent()
@@ -71,8 +75,11 @@ def main():
         wav_path = tts.synthesize(answer)
         stt_pipeline.audio_manager.play(wav_path)
 
-    stt_pipeline = SpeechToTextPipeline(model="base", handler=handle_speech_input, echo=False)
+    stt_pipeline = SpeechToTextPipeline(
+        model="base", handler=handle_speech_input, echo=False
+    )
     stt_pipeline.run()
+
 
 if __name__ == "__main__":
     main()

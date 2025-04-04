@@ -2,11 +2,12 @@ import sys
 from llama_cpp import Llama
 from utils.models import download
 
+
 class Embeddings:
     def __init__(self):
         self.model_path = download(
             repo_id="mykor/paraphrase-multilingual-MiniLM-L12-v2.gguf",
-            filename="paraphrase-multilingual-MiniLM-L12-118M-v2-Q8_0.gguf"
+            filename="paraphrase-multilingual-MiniLM-L12-118M-v2-Q8_0.gguf",
         )
 
         self.llm = Llama(
@@ -15,7 +16,7 @@ class Embeddings:
             n_ctx=128,
             n_batch=512,
             embedding=True,
-            verbose=False  # Set verbose to False to keep llm quiet
+            verbose=False,  # Set verbose to False to keep llm quiet
         )
 
     def generate(self, text):
@@ -28,9 +29,10 @@ class Embeddings:
             print("Error generating embedding:", e)
             sys.exit(1)
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python script.py \"text to embed\"")
+        print('Usage: python script.py "text to embed"')
         sys.exit(1)
 
     input_text = sys.argv[1]

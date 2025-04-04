@@ -1,5 +1,10 @@
 from gst.validator import GstInputValidator
-from utils.common import InputType, CAM_DEV_PREFIX, CAM_DEFAULT_WIDTH, CAM_DEFAULT_HEIGHT
+from utils.common import (
+    InputType,
+    CAM_DEV_PREFIX,
+    CAM_DEFAULT_WIDTH,
+    CAM_DEFAULT_HEIGHT,
+)
 
 
 def find_valid_camera_devices(

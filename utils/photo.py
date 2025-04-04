@@ -3,8 +3,10 @@ import warnings
 
 try:
     import gi
+
     gi.require_version("GUdev", "1.0")
     from gi.repository import GUdev
+
     GLIB_AVAILABLE = True
 except ImportError:
     GLIB_AVAILABLE = False
@@ -12,10 +14,12 @@ except ImportError:
 
 try:
     import cv2
+
     CV2_AVAILABLE = True
 except ImportError:
     CV2_AVAILABLE = False
     warnings.warn("Unable to import cv2, photo capture may not work properly")
+
 
 def get_camera_devices(cam_subsys: str = "video4linux") -> list[str]:
     if not GLIB_AVAILABLE:
@@ -43,9 +47,12 @@ def get_camera_devices(cam_subsys: str = "video4linux") -> list[str]:
                 except OSError as e:
                     warnings.warn(f"Warning: Error reading {index_path}: {e}")
                 except ValueError:
-                    warnings.warn(f"Warning: Unexpected contents in {index_path}: {contents}")
+                    warnings.warn(
+                        f"Warning: Unexpected contents in {index_path}: {contents}"
+                    )
 
     return camera_paths
+
 
 def capture(device=None, filename="out.jpg"):
     try:
@@ -57,7 +64,7 @@ def capture(device=None, filename="out.jpg"):
     fmt_cmd = [
         "v4l2-ctl",
         f"--device={device}",
-        "--set-fmt-video=width=640,height=480,pixelformat=MJPG"
+        "--set-fmt-video=width=640,height=480,pixelformat=MJPG",
     ]
     try:
         subprocess.run(fmt_cmd, capture_output=True, text=True, check=True)
@@ -72,7 +79,7 @@ def capture(device=None, filename="out.jpg"):
         f"--device={device}",
         "--stream-mmap",
         "--stream-count=1",
-        f"--stream-to={filename}"
+        f"--stream-to={filename}",
     ]
     try:
         subprocess.run(capture_cmd, capture_output=True, text=True, check=True)
@@ -84,6 +91,7 @@ def capture(device=None, filename="out.jpg"):
         print("Error capturing image:")
         print(e.stderr)
         return False
+
 
 if __name__ == "__main__":
     capture()

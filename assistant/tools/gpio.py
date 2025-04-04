@@ -21,30 +21,34 @@ import os
 import os
 import argparse
 
+
 def gpio_write(gpio_number, direction, value):
     gpio_path = f"/sys/class/gpio/gpio{gpio_number}"
-    
+
     # Check if GPIO is already exported
     if not os.path.exists(gpio_path):
         # Export the GPIO
         with open("/sys/class/gpio/export", "w") as f:
             f.write(str(gpio_number))
-    
+
     # Set the GPIO direction
     with open(os.path.join(gpio_path, "direction"), "w") as f:
         f.write(direction)
-    
+
     # Write the value to the GPIO
     with open(os.path.join(gpio_path, "value"), "w") as f:
         f.write(str(value))
 
+
 def main():
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Control GPIO pin")
-    
+
     # Add arguments for GPIO number, direction, and value
     parser.add_argument("gpio_number", type=int, help="GPIO pin number")
-    parser.add_argument("direction", choices=["in", "out"], help="GPIO direction (in or out)")
+    parser.add_argument(
+        "direction", choices=["in", "out"], help="GPIO direction (in or out)"
+    )
     parser.add_argument("value", type=int, choices=[0, 1], help="GPIO value (0 or 1)")
 
     # Parse arguments
@@ -52,6 +56,7 @@ def main():
 
     # Call the gpio_write function with parsed arguments
     gpio_write(args.gpio_number, args.direction, args.value)
+
 
 if __name__ == "__main__":
     main()

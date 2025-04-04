@@ -18,7 +18,9 @@ def main(args: argparse.Namespace) -> None:
 
     try:
         if args.input_dims:
-            gst_params["inp_w"], gst_params["inp_h"] = [int(d) for d in args.input_dims.split("x")]
+            gst_params["inp_w"], gst_params["inp_h"] = [
+                int(d) for d in args.input_dims.split("x")
+            ]
 
         if not (
             inp_src_info := get_inp_src_info(
@@ -29,14 +31,15 @@ def main(args: argparse.Namespace) -> None:
             )
         ):
             sys.exit(1)
-        gst_params["inp_type"], gst_params["inp_src"], gst_params["inp_codec"], gst_params["codec_elems"] = (
-            inp_src_info
-        )
+        (
+            gst_params["inp_type"],
+            gst_params["inp_src"],
+            gst_params["inp_codec"],
+            gst_params["codec_elems"],
+        ) = inp_src_info
 
         gst_params["inf_model"] = get_inf_model(args.model)
-        model_inp_dims = get_model_input_dims(
-            gst_params["inf_model"]
-        )
+        model_inp_dims = get_model_input_dims(gst_params["inf_model"])
         if not model_inp_dims:
             sys.exit(1)
         gst_params["inf_w"], gst_params["inf_h"] = model_inp_dims
@@ -54,7 +57,8 @@ def main(args: argparse.Namespace) -> None:
             "Confidence threshold for inferences",
             args.confidence_threshold if args.model else None,
             0.5,
-            0.0, 1.0,
+            0.0,
+            1.0,
         )
         gst_params["inf_labels"] = get_file_prop(
             "Class labels file",
@@ -142,7 +146,7 @@ if __name__ == "__main__":
         type=int,
         metavar="N_RESULTS",
         default=5,
-        help="Maximum number of detections returned per frame (default: %(default)s)"
+        help="Maximum number of detections returned per frame (default: %(default)s)",
     )
 
     # Confidence threshold: only detections with scores above this will be considered valid
@@ -152,7 +156,7 @@ if __name__ == "__main__":
         type=float,
         metavar="SCORE",
         default=0.5,
-        help="Confidence threshold for inferences (default: %(default)s)"
+        help="Confidence threshold for inferences (default: %(default)s)",
     )
 
     # A file containing class labels for use with inference results. The default is labels from the COCO dataset.

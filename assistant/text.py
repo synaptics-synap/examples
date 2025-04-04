@@ -8,28 +8,30 @@ from embeddings.multilingual import Embeddings
 
 DEFAULT_PATH = os.path.join(os.path.dirname(__file__), "data", "qa_pairs.json")
 
+
 class Agent:
     def __init__(self, qa_file=DEFAULT_PATH):
         self.embeddings = Embeddings()
         with open(qa_file, "r") as f:
             self.qa_pairs = json.load(f)
         self.question_embeddings = self.load_embeddings()
-    
+
     def load_embeddings(self):
         texts = [pair["question"] + " " + pair["answer"] for pair in self.qa_pairs]
         embeddings = []
         for text in tqdm(texts, desc="Computing embeddings"):
             embeddings.append(self.embeddings.generate(text))
         return np.array(embeddings)
-    
+
     def answer_query(self, query):
         query_emb = self.embeddings.generate(query)
         sims = cosine_similarity([query_emb], self.question_embeddings).flatten()
         best_idx = np.argmax(sims)
         return {
             "answer": self.qa_pairs[best_idx]["answer"],
-            "similarity": float(sims[best_idx])
+            "similarity": float(sims[best_idx]),
         }
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

@@ -5,8 +5,9 @@ import threading
 from utils.websockets import WebSockets
 from synapRT.pipelines import pipeline
 
+
 def main():
-    ws_server = WebSockets(port=6789,index="./vision/index.html")
+    ws_server = WebSockets(port=6789, index="./vision/index.html")
     ws_server.start()
 
     def handle_results(results, inference_time):
@@ -32,9 +33,10 @@ def main():
                 raise pipe.error
             if pipe.finished:
                 break
-            time.sleep(0.001) # to stop busy waiting
+            time.sleep(0.001)  # to stop busy waiting
     except KeyboardInterrupt:
         sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

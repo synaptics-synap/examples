@@ -1,7 +1,7 @@
-
 from synapRT.pipelines import pipeline
 import json
 import sys
+
 
 def main():
     def handle_results(results, inference_time):
@@ -18,6 +18,7 @@ def main():
 
     print("Starting Object Detection Stream.")
     pipe(sys.argv[1])
+
 
 if __name__ == "__main__":
     main()

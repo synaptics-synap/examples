@@ -24,7 +24,9 @@ RTSP_URL = ""
 VIDEO_CODEC = "h264"
 
 # The path to the inference model to use. Must be a vaild SyNAP model with a ".synap" file extension.
-MODEL = "/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap"
+MODEL = (
+    "/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap"
+)
 
 # How many frames to skip between sucessive inferences.
 # Increasing this number may result in better performance but can look worse visually.
@@ -48,10 +50,17 @@ FULLSCREEN = False
 # RUNNER CODE: DO NOT MODIFY                                                     #
 # ============================================================================== #
 
+
 def main():
     try:
-        inp_w, inp_h = [int(d) for d in args.input_dims.split("x")] if args.input_dims else (None, None)
-        inp_src_info = get_inp_src_info(inp_w, inp_h, args.input, args.input_codec, inp_type=InputType.RTSP)
+        inp_w, inp_h = (
+            [int(d) for d in args.input_dims.split("x")]
+            if args.input_dims
+            else (None, None)
+        )
+        inp_src_info = get_inp_src_info(
+            inp_w, inp_h, args.input, args.input_codec, inp_type=InputType.RTSP
+        )
         if not inp_src_info:
             sys.exit(1)
         model = get_inf_model(args.model)
@@ -83,42 +92,48 @@ def main():
     gen.make_pipeline()
     gen.pipeline.run()
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-i", "--input",
+        "-i",
+        "--input",
         type=str,
         default=RTSP_URL,
         metavar="URL",
-        help="RTSP stream URL (default: %(default)s)"
+        help="RTSP stream URL (default: %(default)s)",
     )
     parser.add_argument(
-        "-d", "--input_dims",
+        "-d",
+        "--input_dims",
         type=validate_inp_dims,
         default=None,
         metavar="WIDTHxHEIGHT",
-        help="[Optional] RTSP stream's input size (widthxheight)"
+        help="[Optional] RTSP stream's input size (widthxheight)",
     )
     parser.add_argument(
-        "-c", "--input_codec",
+        "-c",
+        "--input_codec",
         type=str,
         default=VIDEO_CODEC,
         metavar="CODEC",
         help="RTSP stream input codec (default: %(default)s)",
     )
     parser.add_argument(
-        "-m", "--model",
+        "-m",
+        "--model",
         type=str,
         default=MODEL,
         metavar="FILE",
-        help="SyNAP model file location (default: %(default)s)"
+        help="SyNAP model file location (default: %(default)s)",
     )
     parser.add_argument(
-        "-s", "--inference_skip",
+        "-s",
+        "--inference_skip",
         type=int,
         default=INFERENCE_SKIP,
         metavar="FRAMES",
-        help="How many frames to skip between sucessive inferences (default: %(default)s)"
+        help="How many frames to skip between sucessive inferences (default: %(default)s)",
     )
     parser.add_argument(
         "-n",
@@ -126,7 +141,7 @@ if __name__ == "__main__":
         type=int,
         metavar="N_RESULTS",
         default=MAX_RESULTS,
-        help="Maximum number of detections returned per frame (default: %(default)s)"
+        help="Maximum number of detections returned per frame (default: %(default)s)",
     )
     parser.add_argument(
         "-t",
@@ -134,7 +149,7 @@ if __name__ == "__main__":
         type=float,
         metavar="SCORE",
         default=CONF_THRESHOLD,
-        help="Confidence threshold for inferences (default: %(default)s)"
+        help="Confidence threshold for inferences (default: %(default)s)",
     )
     parser.add_argument(
         "-l",

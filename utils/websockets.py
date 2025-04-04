@@ -5,6 +5,7 @@ import re
 from websocket_server import WebsocketServer
 import http.server
 
+
 class WebSockets:
     def __init__(self, host="0.0.0.0", port=6789, loglevel=0, index=None):
         """
@@ -20,7 +21,9 @@ class WebSockets:
         self.port = port
         self.loglevel = loglevel
         self.index_page = index
-        self.server = WebsocketServer(host=self.host, port=self.port, loglevel=self.loglevel)
+        self.server = WebsocketServer(
+            host=self.host, port=self.port, loglevel=self.loglevel
+        )
         self.connected_clients = []
         self.clients_lock = threading.Lock()
         self.thread = None
@@ -53,10 +56,11 @@ class WebSockets:
         """
         Build a simple HTTP handler that serves the file at index_path regardless of the GET request.
         """
+
         class CustomHandler(http.server.BaseHTTPRequestHandler):
             def do_GET(self):
                 try:
-                    with open(index_path, 'rb') as f:
+                    with open(index_path, "rb") as f:
                         content = f.read()
                     self.send_response(200)
                     self.send_header("Content-type", "text/html")
@@ -65,9 +69,11 @@ class WebSockets:
                     self.wfile.write(content)
                 except Exception as e:
                     self.send_error(404, "File not found")
+
             def log_message(self, format, *args):
                 # Disable default logging.
                 return
+
         return CustomHandler
 
     def start(self):
@@ -84,12 +90,13 @@ class WebSockets:
             print("WebSocket server started.")
             # Yellow terminal message
 
-            
             if self.index_page:
                 handler = self.make_handler(self.index_page)
                 try:
                     self.httpd = http.server.HTTPServer((self.host, 80), handler)
-                    self.web_server_thread = threading.Thread(target=self.httpd.serve_forever, daemon=True)
+                    self.web_server_thread = threading.Thread(
+                        target=self.httpd.serve_forever, daemon=True
+                    )
                     self.web_server_thread.start()
                     print(f"\033[93mOpen your web browser at http://{ip}\033[0m")
                 except Exception as e:

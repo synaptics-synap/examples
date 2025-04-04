@@ -4,7 +4,13 @@ import subprocess
 
 from gst.validator import GstInputValidator
 from utils.camera import find_valid_camera_devices
-from utils.common import InputType, CAM_DEV_PREFIX, CAM_DEFAULT_WIDTH, CAM_DEFAULT_HEIGHT, CODECS
+from utils.common import (
+    InputType,
+    CAM_DEV_PREFIX,
+    CAM_DEFAULT_WIDTH,
+    CAM_DEFAULT_HEIGHT,
+    CODECS,
+)
 
 
 __all__ = [
@@ -72,7 +78,13 @@ def get_file_prop(prompt: str, prop_val: Optional[str], default: str) -> str:
             prop_val = None
 
 
-def get_float_prop(prompt: str, prop_val: Optional[float], default: float, prop_min: float, prop_max: float) -> float:
+def get_float_prop(
+    prompt: str,
+    prop_val: Optional[float],
+    default: float,
+    prop_min: float,
+    prop_max: float,
+) -> float:
     """
     Gets a float property in the range of `prop_range`.
 
@@ -136,7 +148,7 @@ def get_inp_src_info(
         try:
             inp_type: InputType = get_inp_type(inp_src)
         except FileNotFoundError:
-            print(f"\nERROR: Invalid input source \"{inp_src}\"\n")
+            print(f'\nERROR: Invalid input source "{inp_src}"\n')
             return None
     gst_val: GstInputValidator = GstInputValidator(inp_type)
     codec_elems: Optional[tuple[str, str]] = None
@@ -145,7 +157,9 @@ def get_inp_src_info(
             inp_codec = None
             if inp_src.lower() == "auto":
                 print("Finding valid camera device...")
-                valid_devs = find_valid_camera_devices(inp_w or CAM_DEFAULT_WIDTH, inp_h or CAM_DEFAULT_HEIGHT)
+                valid_devs = find_valid_camera_devices(
+                    inp_w or CAM_DEFAULT_WIDTH, inp_h or CAM_DEFAULT_HEIGHT
+                )
                 if not valid_devs:
                     print("\nNo camera connected to board\n")
                     return None
@@ -161,9 +175,9 @@ def get_inp_src_info(
             )
             codec_elems = CODECS[inp_codec]
             msg_on_error: str = (
-                f'ERROR: Invalid input video file "{inp_src}", check source and codec'
-            ) if inp_type == InputType.FILE else (
-                f'ERROR: Invalid RTSP stream "{inp_src}", check URL and codec'
+                (f'ERROR: Invalid input video file "{inp_src}", check source and codec')
+                if inp_type == InputType.FILE
+                else (f'ERROR: Invalid RTSP stream "{inp_src}", check URL and codec')
             )
         else:
             raise SystemExit("Fatal: invalid input parameters")
