@@ -74,35 +74,39 @@ class SpeechToTextPipeline:
         self.speech *= 0.0
 
     def run(self):
-        self.audio_manager.start_record(chunk_size=CHUNK_SIZE)
-        print("Press Ctrl+C to quit speech-to-text.\n")
-        start_time = time.time()
-        call_end_recording = False
+        try:
+            self.audio_manager.start_record(chunk_size=CHUNK_SIZE)
+            print("Press Ctrl+C to quit speech-to-text.\n")
+            start_time = time.time()
+            call_end_recording = False
 
-        for chunk in self.audio_manager.read(chunk_size=CHUNK_SIZE):
-            if call_end_recording:
-                self.end_recording()
-                call_end_recording = False
+            for chunk in self.audio_manager.read(chunk_size=CHUNK_SIZE):
+                if call_end_recording:
+                    self.end_recording()
+                    call_end_recording = False
 
-            self.speech = np.concatenate((self.speech, chunk))
-            if not self.recording:
-                self.speech = self.speech[-self.lookback_size :]
-            speech_dict = self.vad_iterator(chunk)
+                self.speech = np.concatenate((self.speech, chunk))
+                if not self.recording:
+                    self.speech = self.speech[-self.lookback_size :]
+                speech_dict = self.vad_iterator(chunk)
 
-            if speech_dict:
-                if "start" in speech_dict and not self.recording:
-                    self.recording = True
-                    start_time = time.time()
-                if "end" in speech_dict and self.recording:
-                    call_end_recording = True
-                    self.recording = False
-            elif self.recording:
-                if (len(self.speech) / SAMPLING_RATE) > MAX_SPEECH_SECS:
-                    call_end_recording = True
-                    self.recording = False
-                    self.soft_reset()
-                elif (time.time() - start_time) > MIN_REFRESH_SECS:
-                    start_time = time.time()
+                if speech_dict:
+                    if "start" in speech_dict and not self.recording:
+                        self.recording = True
+                        start_time = time.time()
+                    if "end" in speech_dict and self.recording:
+                        call_end_recording = True
+                        self.recording = False
+                elif self.recording:
+                    if (len(self.speech) / SAMPLING_RATE) > MAX_SPEECH_SECS:
+                        call_end_recording = True
+                        self.recording = False
+                        self.soft_reset()
+                    elif (time.time() - start_time) > MIN_REFRESH_SECS:
+                        start_time = time.time()
+        except KeyboardInterrupt:
+            print("\n Speech-to-text stopped by user.")
+            self.audio_manager.stop_record()
 
 
 if __name__ == "__main__":
