@@ -9,7 +9,7 @@ soundfile
 huggingface-hub
 piper-tts
 websocket-server
-llama-cpp-python @ https://github.com/dpajak-synaptics/llama-cpp-python/releases/download/v0.3.7/llama_cpp_python-0.3.7-cp310-cp310-linux_aarch64.whl
+llama-cpp-python @ https://github.com/asahu-synaptics/llama-cpp-python/releases/download/v0.3.7/llama_cpp_python-0.3.7-cp310-cp310-linux_aarch64.whl
 synap-python @ https://github.com/synaptics-synap/synap-python/releases/download/v0.0.2-preview/synap_python-0.0.2-cp310-cp310-linux_aarch64.whl
 synap-rt @ https://github.com/synaptics-synap/synap-rt/releases/download/v0.0.1-preview/synap_rt-0.0.1-py3-none-any.whl
 onnxruntime>=1.20.0,<1.21.0
