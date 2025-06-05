@@ -4,14 +4,18 @@
 
 This repository provides AI example applications for the **Synaptics Astra SL16xx** series, covering **computer vision, speech processing, and large language models (LLMs)**. Follow the instructions below to set up your environment and run various AI examples in few minutes.
 
-The examples in this repository are designed to work with Astra SL series processors leveraging NPUs (for SL1680 and SL1640 processors) and GPUs (for SL1620 processor) using Astra Machina Dev Kit. 
+The examples in this repository are designed to work with Astra SL1680 processor using Astra Machina Dev Kit. Vision examples leverage NPU and other examples leverage CPU.
 
-
-> **Note:** Learn more about Synaptics Astra by visiting:
+> **Note:** For Astra SL1640 processor (leveraging NPU), these examples can be still run, after adding required set of packages into the OOBE image via bitbake.
 > 
-> - [Astra](https://www.synaptics.com/products/embedded-processors) – Explore the Astra AI platform.
-> - [Astra Machina](https://www.synaptics.com/products/embedded-processors/astra-machina-foundation-series) – Discover our powerful development kit.
-> - [AI Developer Zone](https://developer.synaptics.com/) – Find step-by-step tutorials and resources.
+> **Note:** For Astra SL1640 processor (leveraging GPU), Vision examples need to be modified for GPU (instead of NPU), after adding required set of packages into the OOBE image via bitbake.
+
+
+## Learn more about Synaptics Astra by visiting:
+
+- [Astra](https://www.synaptics.com/products/embedded-processors) – Explore the Astra AI platform.
+- [Astra Machina](https://www.synaptics.com/products/embedded-processors/astra-machina-foundation-series) – Discover our powerful development kit.
+- [AI Developer Zone](https://developer.synaptics.com/) – Find step-by-step tutorials and resources.
 
 
 ## Setting up Astra Machina Board
