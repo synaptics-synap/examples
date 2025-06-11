@@ -378,7 +378,11 @@
       updateForm();
 
       const wsProtocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-      const wsPort = 6789;
+      const params = new URLSearchParams(window.location.search);
+      const task = params.get('task') || 'body';
+
+      let wsPort = 6789; // default
+      if (task === 'hand') wsPort = 6790;
       const wsURL = wsProtocol + '://' + ipAddr + ':' + wsPort;
       socket = new WebSocket(wsURL);
 

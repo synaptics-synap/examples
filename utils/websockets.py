@@ -4,26 +4,31 @@ import subprocess
 import re
 from websocket_server import WebsocketServer
 import http.server
-
+import socket
 
 class WebSockets:
     def __init__(self, host="0.0.0.0", port=6789, loglevel=0, index=None):
         """
-        Init the WebSocket server.
-        If index is set, it also starts a simple web server on port 80 that always returns the given file.
+        Initialize the WebSocket server. If 'index' is provided, also starts a simple HTTP server on port 80.
 
-        :param host: IP to bind the server.
-        :param port: Port for the WebSocket server.
-        :param loglevel: Logging level.
-        :param index: Path to the file to serve on port 80.
+        :param host: IP to bind the server (default is 0.0.0.0)
+        :param port: Preferred WebSocket server port (auto-fallback if in use)
+        :param loglevel: WebSocketServer logging level
+        :param index: Path to HTML file to serve on port 80
         """
+
+        def is_port_available(p, h="0.0.0.0"):
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                try:
+                    s.bind((h, p))
+                    return True
+                except OSError:
+                    return False
+
         self.host = host
         self.port = port
         self.loglevel = loglevel
         self.index_page = index
-        self.server = WebsocketServer(
-            host=self.host, port=self.port, loglevel=self.loglevel
-        )
         self.connected_clients = []
         self.clients_lock = threading.Lock()
         self.thread = None
@@ -31,9 +36,30 @@ class WebSockets:
         self.httpd = None
         self.web_server_thread = None
 
-        # Set callback functions
+        # Try preferred port, else fallback
+        start_port = port
+        if not is_port_available(start_port, self.host):
+            print(f"[WARN] Port {start_port} is in use. Trying alternative ports...")
+            for offset in range(1, 10):
+                alt_port = start_port + offset
+                if is_port_available(alt_port, self.host):
+                    self.port = alt_port
+                    print(f"[INFO] Using fallback port {self.port}")
+                    break
+            else:
+                raise RuntimeError("No available port found for WebSocket server.")
+
+        self.server = WebsocketServer(
+            host=self.host,
+            port=self.port,
+            loglevel=self.loglevel
+        )
+        self.server.allow_reuse_address = True
+
+        # Set callback handlers
         self.server.set_fn_new_client(self.new_client)
         self.server.set_fn_client_left(self.client_left)
+
 
     def new_client(self, client, server):
         """
