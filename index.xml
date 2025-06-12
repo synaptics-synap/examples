@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Astra Examples – Dependency Packages</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    h1 {
+      color: #333;
+    }
+    h2 {
+      margin-top: 2rem;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    ul {
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Astra Dependency Packages</h1>
+
+  <p>This page provides download links for system and Python packages required to run Astra examples on supported devices.</p>
+
+  <h2>📦 System Packages (.deb)</h2>
+  <p>Use <code>dpkg</code> to install these system dependencies:</p>
+  <ul>
+    <li><a href="./packages/sqlite3_3.38.5-r0_arm64.deb">sqlite3_3.38.5-r0_arm64.deb</a></li>
+    <li><a href="./packages/python3-sqlite3_3.10.13-r0_arm64.deb">python3-sqlite3_3.10.13-r0_arm64.deb</a></li>
+  </ul>
+
+  <h3>Install with:</h3>
+  <pre>
+sudo dpkg -i packages/python3-sqlite3_3.10.13-r0_arm64.deb packages/sqlite3_3.38.5-r0_arm64.deb
+  </pre>
+
+  <h2>🐍 Python Package (.whl)</h2>
+  <p>Use <code>pip</code> to install the Python package for LLaMA C++ integration:</p>
+  <ul>
+    <li><a href="./packages/llama_cpp_python-0.3.7-cp310-cp310-linux_aarch64.whl">llama_cpp_python-0.3.7-cp310-cp310-linux_aarch64.whl</a></li>
+  </ul>
+
+  <h3>Install with:</h3>
+  <pre>
+pip install https://synaptics-synap.github.io/examples/packages/llama_cpp_python-0.3.7-cp310-cp310-linux_aarch64.whl
+  </pre>
+
+  <h2>📝 Using requirements.txt</h2>
+  <p>If you're using a <code>requirements.txt</code> file, this Python wheel has been already installed:</p>
+  <pre>
+llama-cpp-python @ https://synaptics-synap.github.io/examples/packages/llama_cpp_python-0.3.7-cp310-cp310-linux_aarch64.whl
+  </pre>
+
+</body>
+</html>

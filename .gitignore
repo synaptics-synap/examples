@@ -1,8 +1,0 @@
-.venv
-__pycache*
-text-to-speech/output
-cached*
-*.wav
-models
-packages
-out.jpg
