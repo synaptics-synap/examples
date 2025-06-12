@@ -101,8 +101,8 @@ python3 -m text_to_speech.piper "synaptics astra example"
 ##### Install SQLite3 Dependencies
 SQLite3 is required for certain AI model operations. Install it using the following commands:
 ```bash
-wget https://synaptics-astra-labs.s3.us-east-1.amazonaws.com/downloads/sqlite3_3.38.5-r0_arm64.deb
-wget https://synaptics-astra-labs.s3.us-east-1.amazonaws.com/downloads/python3-sqlite3_3.10.13-r0_arm64.deb
+wget https://raw.githubusercontent.com/synaptics-synap/examples/wip/docs/packages/sqlite3_3.38.5-r0_arm64.deb
+wget https://raw.githubusercontent.com/synaptics-synap/examples/wip/docs/packages/python3-sqlite3_3.10.13-r0_arm64.deb
 dpkg -i python3-sqlite3_3.10.13-r0_arm64.deb sqlite3_3.38.5-r0_arm64.deb
 ```
 
