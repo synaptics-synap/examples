@@ -9,7 +9,7 @@
 **Project:** [Bionic Robot Hand Demo](https://github.com.mcas.ms/grinn-global/bionic-robot-hand-demo)
 
 **About the Winning Project:**
-GRINN's outstanding project based on Task 1, implements real-time hand gesture recognition and robotic control using the Synaptics Astra SL1680 NPU with a YOLO-Pose model optimized by SyNAP. Their innovative approach features landmark detection, joint-angle calculations for precise servo control, and an engaging interactive frontend with a WebSocket JSON API. The application smoothly transitions between mirror mode and an engaging Rock-Paper-Scissors game!
+This outstanding project based on Task 1, implements real-time hand gesture recognition and robotic control using the Synaptics Astra SL1680 NPU with a YOLO-Pose model optimized by SyNAP. Their innovative approach features landmark detection, joint-angle calculations for precise servo control, and an engaging interactive frontend with a WebSocket JSON API. The application smoothly transitions between mirror mode and an engaging Rock-Paper-Scissors game!
 
 **Learn more about the project here →**  [Bionic Robot Hand Demo](https://github.com.mcas.ms/grinn-global/bionic-robot-hand-demo)
 
