@@ -8,7 +8,7 @@ The examples in this repository are designed to work with Astra SL1680 processor
 
 > **Note:** For Astra SL1640 processor (leveraging NPU), these examples can be still run, after adding required set of packages into the OOBE image via bitbake.
 > 
-> **Note:** For Astra SL1640 processor (leveraging GPU), Vision examples need to be modified for GPU (instead of NPU), after adding required set of packages into the OOBE image via bitbake.
+> **Note:** For Astra SL1620 processor (leveraging GPU), Vision examples need to be modified for GPU (instead of NPU), after adding required set of packages into the OOBE image via bitbake.
 
 
 ## Learn more about Synaptics Astra by visiting:
