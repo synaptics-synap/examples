@@ -53,7 +53,7 @@ pip install -r requirements.txt
 [SynapRT](https://github.com/synaptics-synap/synap-rt) Python package allows you to run real-time AI pipelines on your Synaptics Astra board in just a few lines of code:
 
 ```bash
-pip install https://github.com/synaptics-synap/synap-rt/releases/download/v0.0.1-preview/synap_rt-0.0.1-py3-none-any.whl
+pip install https://github.com/synaptics-synap/synap-rt/releases/download/v0.0.2-preview/synap_rt-0.0.2-py3-none-any.whl
 ```
 
 ## 🎯 Running AI Examples
