@@ -9,5 +9,5 @@ soundfile
 huggingface-hub
 piper-tts
 websocket-server
-synap-python @ https://github.com/synaptics-synap/synap-python/releases/download/v0.0.4-preview/synap_python-0.0.4-cp310-cp310-manylinux_2_35_aarch64.whl
-synap-rt @ https://github.com/synaptics-synap/synap-rt/releases/download/v0.0.2-preview/synap_rt-0.0.2-py3-none-any.whl
+synap-python
+synap-rt
