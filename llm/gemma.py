@@ -14,11 +14,12 @@ while True:
     user_input = input("You: ")
     if user_input.strip().lower() in ("exit", "quit"):
         break
-    messages.append({"role": "user", "content": user_input})
+    # Only send the current user message, no history
+    current_messages = [{"role": "user", "content": user_input}]
     response_stream = llm.create_chat_completion(
-        messages=messages,
+        messages=current_messages,
         stream=True,
-        # max_tokens=128,  # shorter answers
+        #max_tokens=128,  # shorter answers, avoid context overflow
         temperature=0.7,  
     )
     full_response = ""
