@@ -2,9 +2,23 @@ import json
 import sys
 import time
 import threading
+import subprocess
 from utils.websockets import WebSockets
 from synapRT.pipelines import pipeline
 
+
+def get_model_path():
+    try:
+        hostname = subprocess.check_output(['cat', '/etc/hostname']).decode().strip()
+    except Exception:
+        hostname = ""
+    if hostname == "sl1620":
+        return "/usr/share/synap/models/object_detection/coco/model.synap"
+    elif hostname in ("sl1680", "sl1640"):
+        return "/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap"
+    else:
+        print("Unknown processor")
+        return "/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap"
 
 def main():
     ws_server = WebSockets(port=6789, index="./vision/index.html")
@@ -14,9 +28,11 @@ def main():
         message = json.dumps(results)
         ws_server.broadcast(message)
 
+    # Accept model path as second argument, else use default
+    model_path = sys.argv[2] if len(sys.argv) > 2 else get_model_path()
     pipe = pipeline(
         task="object-detection",
-        model="/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap",
+        model=model_path,
         profile=True,
     )
 

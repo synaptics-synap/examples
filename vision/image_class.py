@@ -22,11 +22,12 @@ def handle_results(results, inference_time):
 
 
 if __name__ == "__main__":
-    model = "/usr/share/synap/models/image_classification/imagenet/model/mobilenet_v2_1.0_224_quant/model.synap"
-    image = "/usr/share/synap/models/image_classification/imagenet/sample/space_shuttle_224x224.jpg"
-    labels = load_labels(
-        "/usr/share/synap/models/image_classification/imagenet/info.json"
-    )
+    default_model = "/usr/share/synap/models/image_classification/imagenet/model/mobilenet_v2_1.0_224_quant/model.synap"
+    default_labels = "/usr/share/synap/models/image_classification/imagenet/info.json"
+    # Accept model path as first argument, else use default
+    model = sys.argv[2] if len(sys.argv) > 2 else default_model
+    image = sys.argv[1]
+    labels = load_labels(default_labels)
 
     pipe = pipeline(
         task="image-classification",
@@ -35,4 +36,4 @@ if __name__ == "__main__":
         handler=handle_results,
         top_n=5,
     )
-    pipe(sys.argv[1])
+    pipe(image)
