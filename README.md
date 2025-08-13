@@ -19,7 +19,7 @@ The examples in this repository are designed to work with Astra SL1680 processor
 
 
 ## Setting up Astra Machina Board
-For instructions on how to set up Astra Machina board , see the  [Setting up the hardware](https://synaptics-astra.github.io/doc/v/1.5.0/quickstart/hw_setup.html)  guide.
+For instructions on how to set up Astra Machina board , see the  [Setting up the hardware](https://synaptics-astra.github.io/doc/v/latest/quickstart/hw_setup.html)  guide.
 
 
 ## 🔧 Installation
@@ -55,6 +55,7 @@ pip install -r requirements.txt
 ```bash
 pip install https://github.com/synaptics-synap/synap-rt/releases/download/v0.0.2-preview/synap_rt-0.0.2-py3-none-any.whl
 ```
+
 
 ## 🎯 Running AI Examples
 
@@ -103,27 +104,24 @@ python3 -m text_to_speech.piper "synaptics astra example"
 ##### Install SQLite3 Dependencies
 SQLite3 is required for certain AI model operations. Install it using the following commands:
 ```bash
-wget https://raw.githubusercontent.com/synaptics-synap/examples/wip/docs/packages/sqlite3_3.38.5-r0_arm64.deb
-wget https://raw.githubusercontent.com/synaptics-synap/examples/wip/docs/packages/python3-sqlite3_3.10.13-r0_arm64.deb
-dpkg -i python3-sqlite3_3.10.13-r0_arm64.deb sqlite3_3.38.5-r0_arm64.deb
+wget https://synaptics-synap.github.io/examples-prebuilts/packages/sqlite3_3.38.5-r0_arm64.deb
+wget https://synaptics-synap.github.io/examples-prebuilts/packages/python3-sqlite3_3.10.13-r0_arm64.deb
+dpkg -i python3-sqlite3_3.10.13-r0_arm64.deb sqlite3_3.38.5-r0_arm64.deb`
 ```
 
 #### 🦙 Install `llama-cpp-python`
 
-This command installs **llama-cpp-python**, which enables running large language models efficiently:
-```bash
-pip install llama-cpp-python
+This command installs **llama-cpp-python**, which enables running large language models efficiently.
+We have our prebuilt version for Astra : 
+```
+pip install https://synaptics-synap.github.io/examples-prebuilts/packages/llama_cpp_python-0.3.14-cp310-cp310-linux_aarch64.whl
 ```
 
-There is also a prebuilt version, this installs faster but lags version and may not support newer models (e.g. deepseek)
-```
-pip install llama-cpp-python   --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cpu
-```
-
-To run large language models such as **Qwen** and **DeepSeek**:
+To run large language models such as **Qwen**, **Gemma** and **DeepSeek**:
 
 ```bash
 python3 -m llm.qwen
+#python3 -m llm.gemma
 #python3 -m llm.deepseek
 ```
 ![qwen](/samples/qwen.gif)
@@ -159,7 +157,9 @@ python3 -m examples.infer_video -i /home/root/video.mp4 --fullscreen
 - [GitHub SyNAP-Python-API](https://github.com/synaptics-synap/synap-python) – Python bindings that closely mirror our SyNAP C++ API.
 - [GitHub SyNAP C++](https://github.com/synaptics-astra/synap-framework) – Low-level access to our SyNAP C++ AI Framework
 - [GitHub Astra SDK](https://github.com/synaptics-astra) – Get started with the Astra SDK for AI development.
+- [GitHub Examples Pre-builts](https://github.com/synaptics-synap/examples-prebuilts) – Pre-built packages for Astra Machina.
 
+  
 ## Contributing
 
 We encourage and appreciate community contributions! Here’s how you can get involved:
