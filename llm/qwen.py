@@ -9,7 +9,7 @@ model_path = download(
 llm = Llama(model_path=model_path, verbose=False)  # Enable for debug messages
 
 response_stream = llm.create_chat_completion(
-    messages=[{"role": "user", "content": "告诉我有关 synaptics Inc 的信息"}],
+    messages=[{"role": "user", "content": "Tell me about Synaptics Inc.?"}],
     stream=True,  # Enable streaming
 )
 
