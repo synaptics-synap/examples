@@ -117,11 +117,16 @@ We have our prebuilt version for Astra :
 pip install https://synaptics-synap.github.io/examples-prebuilts/packages/llama_cpp_python-0.3.14-cp310-cp310-linux_aarch64.whl
 ```
 
-To run large language models such as **Qwen**, **Gemma** and **DeepSeek**:
+To run large language models such as  **Gemma**, **Qwen** and **DeepSeek**:
 
+**For interactive chat example:** 
+```bash
+python3 -m llm.gemma
+```
+
+**For chat completion example:**
 ```bash
 python3 -m llm.qwen
-#python3 -m llm.gemma
 #python3 -m llm.deepseek
 ```
 ![qwen](/samples/qwen.gif)
