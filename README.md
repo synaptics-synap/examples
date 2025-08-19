@@ -146,13 +146,7 @@ python3 -m assistant.toolcall
 
  
 ## Running gstreamer example
-Use SyNAP GStreamer Plugins to run Real-time inference on a video input using Python
-
-```bash
-python3 -m examples.infer_video -i /home/root/video.mp4 --fullscreen
-```
-
-![od](/samples/od.gif)
+Please see [synap-rt](https://github.com/synaptics-synap/synap-rt) for running real-time GStreamer based inference
 
 
 ## 📚 Additional Resources
