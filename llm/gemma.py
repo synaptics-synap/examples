@@ -1,9 +1,16 @@
 from llama_cpp import Llama
 from utils.models import download
 
+# Gemma3 1B model
+# model_path = download(
+#     repo_id="ggml-org/gemma-3-1b-it-GGUF",
+#     filename="gemma-3-1b-it-Q8_0.gguf",
+# )
+
+# Gemma3 270M model
 model_path = download(
-    repo_id="ggml-org/gemma-3-1b-it-GGUF",
-    filename="gemma-3-1b-it-Q8_0.gguf",
+    repo_id="ggml-org/gemma-3-270m-GGUF",
+    filename="gemma-3-270m-Q8_0.gguf",
 )
 llm = Llama(model_path=model_path, verbose=False)   
 
