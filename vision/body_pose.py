@@ -13,12 +13,12 @@ def get_model_path():
     except Exception:
         hostname = ""
     if hostname == "sl1620":
-        return "/usr/share/synap/models/object_detection/coco/model.synap"
+        return "/usr/share/synap/models/object_detection/body_pose/model.synap"
     elif hostname in ("sl1680", "sl1640"):
-        return "/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap"
+        return "/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap"
     else:
         print("Unknown processor")
-        return "/usr/share/synap/models/object_detection/coco/model/yolov8s-640x384/model.synap"
+        return "/usr/share/synap/models/object_detection/body_pose/model/yolov8s-pose/model.synap"
 
 def main():
     ws_server = WebSockets(port=6789, index="./vision/index.html")
