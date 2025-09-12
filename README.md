@@ -46,15 +46,19 @@ To get started, set up your Python environment. This step ensures all required d
 python3 -m venv .venv --system-site-packages
 source .venv/bin/activate
 pip install --upgrade pip
+```
+
+For Astra OOBE SDK 2.0 (scarthgap) and above, Please use Python3.12 packages:
+```
+pip install -r requirements-py312.txt
+```
+
+For Astra OOBE SDK 1.8 (kirkstone) and below, Please use Python3.10 packages:
+
+```
 pip install -r requirements.txt
 ```
 
-### Install SynapRT 
-[SynapRT](https://github.com/synaptics-synap/synap-rt) Python package allows you to run real-time AI pipelines on your Synaptics Astra board in just a few lines of code:
-
-```bash
-pip install https://github.com/synaptics-synap/synap-rt/releases/download/v0.0.2-preview/synap_rt-0.0.2-py3-none-any.whl
-```
 
 
 ## 🎯 Running AI Examples
