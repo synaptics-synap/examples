@@ -66,7 +66,7 @@ pip install -r requirements.txt
 ### 🖼️ Vision
 To run a YOLOv8-small  image classification model on a Image:
 ```bash
- python3 -m vision.image_class out.jpg
+python3 -m vision.image_class samples/fish.jpg
 ```
 
 
@@ -122,6 +122,7 @@ dpkg -i python3-sqlite3_3.10.13-r0_arm64.deb sqlite3_3.38.5-r0_arm64.deb
 
 This command installs **llama-cpp-python**, which enables running large language models efficiently.
 We have our prebuilt version for Astra.
+
 For Astra OOBE SDK 2.0 (scarthgap) and above, Please use Python 3.12 version:
 ```
 pip install https://synaptics-synap.github.io/examples-prebuilts/packages/llama_cpp_python-0.3.16-cp312-cp312-linux_aarch64.whl
