@@ -82,7 +82,7 @@ python3 -m vision.body_pose 'cam'
 
 ### 🗣️ Speech-to-Text
 
-**Moonshine** is an speech-to-text model that provides translation from speech to text.
+**Moonshine** is a speech-to-text model that provides translation from speech to text.
 
 To transcribe an audio file ( for example`jfk.wav`):
 ```bash
