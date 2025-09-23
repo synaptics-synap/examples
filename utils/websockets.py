@@ -138,7 +138,7 @@ class WebSockets:
         ip = None
         try:
             output = subprocess.check_output(["ifconfig", "eth0"]).decode("utf-8")
-            match = re.search(r"inet addr:(\S+)", output)
+            match = re.search(r"inet (?:\S+:)?(\S+)", output)
             if match:
                 ip = match.group(1)
         except subprocess.CalledProcessError:
@@ -147,7 +147,7 @@ class WebSockets:
         if not ip:
             try:
                 output = subprocess.check_output(["ifconfig", "wlan0"]).decode("utf-8")
-                match = re.search(r"inet addr:(\S+)", output)
+                match = re.search(r"inet (?:\S+:)?(\S+)", output)
                 if match:
                     ip = match.group(1)
             except subprocess.CalledProcessError:
