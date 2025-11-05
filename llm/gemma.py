@@ -1,5 +1,6 @@
 from llama_cpp import Llama
 from utils.models import download
+import time
 
 # Gemma3 1B model
 # model_path = download(
@@ -9,30 +10,44 @@ from utils.models import download
 
 # Gemma3 270M model
 model_path = download(
-    repo_id="ggml-org/gemma-3-270m-GGUF",
-    filename="gemma-3-270m-Q8_0.gguf",
+    repo_id="ggml-org/gemma-3-270m-it-GGUF",
+    filename="gemma-3-270m-it-Q8_0.gguf",
 )
-llm = Llama(model_path=model_path, verbose=False)   
 
-messages = []
-print("Interactive chat. Type 'exit' to quit.")
+print("Loading Gemma 3 model...")
+t0 = time.time()
+llm = Llama(model_path=model_path, n_ctx=4096, verbose=False)
+print(f"Model loaded in {time.time() - t0:.2f} s\n")
+
+# --- Chat memory ---
+messages = [{"role": "system", "content": "You are Gemma 3, a concise helpful AI assistant."}]
+
+print("💬 Interactive chat started (type 'exit' or 'quit' to stop)\n")
 
 while True:
-    user_input = input("You: ")
-    if user_input.strip().lower() in ("exit", "quit"):
+    user_input = input("You: ").strip()
+    if user_input.lower() in {"exit", "quit"}:
+        print("Goodbye!")
         break
-    # Only send the current user message, no history
-    current_messages = [{"role": "user", "content": user_input}]
-    response_stream = llm.create_chat_completion(
-        messages=current_messages,
-        stream=True,
-        #max_tokens=128,  # shorter answers, avoid context overflow
-        temperature=0.7,  
-    )
-    full_response = ""
-    for chunk in response_stream:
-        token = chunk["choices"][0].get("delta", {}).get("content", "")
-        full_response += token
-        print(token, end="", flush=True)
+
+    messages.append({"role": "user", "content": user_input})
+
+    # --- Streamed response and tokens/sec measurement ---
+    print("\nGemma:", end=" ", flush=True)
+    output = ""
+    t1 = time.time()
+    token_count = 0
+    for chunk in llm.create_chat_completion(messages=messages, stream=True, max_tokens=256, temperature=0.7):
+        delta = chunk["choices"][0]["delta"]
+        if "content" in delta:
+            text = delta["content"]
+            output += text
+            print(text, end="", flush=True)
+            token_count += 1
     print()
-    messages.append({"role": "assistant", "content": full_response})
+    total_time = time.time() - t1
+    tps = token_count / total_time if token_count and total_time > 0 else 0.0
+    print(f"\nAvg tokens/sec: {tps:.2f}\n")
+
+    # --- Store assistant response for context ---
+    messages.append({"role": "assistant", "content": output})
