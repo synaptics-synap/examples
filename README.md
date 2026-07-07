@@ -98,6 +98,9 @@ python3 -m speech_to_text.pipeline
 
 ### 🔊 Text-to-Speech
 Convert a given text string into synthetic speech using **Piper**:
+
+> **Note:** This example application uses the piper-tts Python package, which, starting with version 1.3.0, is available under a GPL3 license. Depending on your organization, this may be incompatible with production usage.
+
 ```bash
 python3 -m text_to_speech.piper "synaptics astra example"
 ```
